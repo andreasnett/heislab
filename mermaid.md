@@ -38,7 +38,13 @@ classDiagram
 ```mermaid
 sequenceDiagram
     User->>+Elevator: Go to floor 4
-    User-->>+Elevator: Stop at floor 2
-    Elevator-->>-User: Stopping at floor 2
+    Elevator->>+Queue: Add floor 4 to queue
+    User-->>+Elevator: Stop at floor 3
+    Elevator->>+Queue: Add floor 3 to queue
+    Elevator-->>+Queue: Check stop floor 2
+    Queue-->>-Elevator: No stop floor 2
+    Elevator-->>+Queue: Check stop floor 3
+    Queue->>-Elevator: Stop at floor 2
+    Elevator-->>-User: Stopping at floor 3
     Elevator->>-User: Stopping at floor 4
 ```
