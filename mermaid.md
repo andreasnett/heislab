@@ -33,6 +33,8 @@ classDiagram
 
 ## Sequence diagram
 
+### User at floor 1 wishes to go to floor 4
+
 ```mermaid
 sequenceDiagram
     User->>+Elevator: Go to floor 4
