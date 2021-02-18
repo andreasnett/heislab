@@ -38,7 +38,7 @@ classDiagram
 ```mermaid
 sequenceDiagram
     User->>+Elevator: Go to floor 4
-    User->>+Elevator: Stop at floor 2
+    User-->>+Elevator: Stop at floor 2
     Elevator-->>-User: Stopping at floor 2
-    Elevator-->>-User: Stopping at floor 4
+    Elevator->>-User: Stopping at floor 4
 ```
