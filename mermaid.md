@@ -10,22 +10,22 @@ classDiagram
       -Queue queue
       -ElevatorState state
       -boolean EmergencyStop
+      -boolean Active
       +init()
-      +activate()
+      +activate() /* loop */
     }
 
     class Queue{
-      -Map map
-      +getNext()
+      -Map callQueue
       +addToQueue(int)
       +popFromQueue(int)
       +checkStop(int)
     }
 
     class ElevatorState{
-      +String direction
-      +int targetFloor
-      +int currentFloor
+      -char[] direction
+      -int targetFloor
+      -int currentFloor
       +setState(int, int)
       +getState()
     }
@@ -74,22 +74,69 @@ sequenceDiagram
 ## Finite State Machine
 
 ```mermaid
+
+stateDiagram-v2
+  [*]-->evStill: emergency || error
+
+  evStill-->evStill: (cFlr == tFlr) / 0V
+
+  evStill-->evUp: (cFlr < tFlr) / -5V
+
+  evStill-->[*]: emergency || error
+
+  evStill-->evDown: (cFlr > tFlr) / +5V
+  evStill-->em: emButton
+
+  evUp-->evStill: (cFlr == nFlr) / 0V
+
+  evDown-->evStill: (cFlr == nFlr) / 0V
+
+
+
+
+```
+
+## fsm
+
+```mermaid
+
+stateDiagram-v2
+  s1: evStill
+  [*]-->s1: emergency || error
+
+  s1-->s1: cFlr == tFlr
+  s1-->evDown: cFlr < tFlr
+  s1-->evUp: cFlr > tFlr
+  s2: evStill
+  evUp-->s2: cFlr == nFlr
+
+  evDown-->s2: cFlr == nFlr
+
+  s2-->[*]: emergency || error
+
+
+
+```
+
+```mermaid
+
+
 stateDiagram
-   [*]--> A
-   A-->C: 0/0
-   A-->B: 1/0
+      [*] --> elevatorStart
+      elevatorStart --> elevatorUp: eUp
+      elevatorStart --> elevatorDown: eDown
 
-   B-->C: 0/0
-   B-->A: 1/0
 
-   C-->C: 0/0
-   C-->DF: 1/0
+      state join_state <<join>>
+      elevatorUp --> join_state
+      elevatorDown --> join_state
+      join_state --> elevatorEnd
+      elevatorEnd --> [*]
 
-   DF-->E:0/0
-   DF-->A:1/0
-
-   E-->C: 0/0
-   E-->DF: 1/1
-   E-->[*]
-
+      state States {
+        s1: eUp
+        s1: currentFloor > targetFloor
+        s2: eDown
+        s2: currentFloor < targetFloor
+      }
 ```
