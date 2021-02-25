@@ -76,23 +76,28 @@ sequenceDiagram
 ```mermaid
 
 stateDiagram-v2
-  [*]-->evStill: emergency || error
+  [*]-->evInit: start
+
+  evInit-->evStill: currentFloor
 
   evStill-->evStill: (cFlr == tFlr) / 0V
 
   evStill-->evUp: (cFlr < tFlr) / -5V
 
-  evStill-->[*]: emergency || error
+  evStill-->[*]: stop
 
   evStill-->evDown: (cFlr > tFlr) / +5V
-  evStill-->em: emButton
 
   evUp-->evStill: (cFlr == nFlr) / 0V
 
   evDown-->evStill: (cFlr == nFlr) / 0V
 
+  evStill-->em: emButton
+  evUp-->em: emButton
+  evDown-->em: emButton
+  em-->evStill: !emButton
 
-
+  error
 
 ```
 
