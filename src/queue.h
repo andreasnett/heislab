@@ -12,7 +12,6 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 
-#include <stdio.h>
 #include <stdbool.h>
 
 struct Floor{
@@ -21,10 +20,20 @@ struct Floor{
 };
 
 struct callQueue {
-    struct Floor floorOne;
+    bool floorOne;
     struct Floor floorTwo;
     struct Floor floorThree;
-    struct Floor floorFour;
+    bool floorFour;
 };
+
+typedef struct Queue {
+    struct callQueue map;
+} Queue;
+
+Queue* QueueConstructor();
+void QueueDestructor(Queue*);
+void addToQueue(Queue*, int);
+void popFromQueue(Queue*, int);
+bool checkStop(Queue*, int);
 
 #endif // QUEUE_H
