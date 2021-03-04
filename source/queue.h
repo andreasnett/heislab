@@ -13,27 +13,23 @@
 #define QUEUE_H
 
 #include <stdbool.h>
+#include "elevatorStatus.h"
 
 struct Floor{
     bool up;
     bool down;
 };
 
-struct callQueue {
+struct Queue {
     bool floorOne;
     struct Floor floorTwo;
     struct Floor floorThree;
     bool floorFour;
 };
 
-typedef struct Queue {
-    struct callQueue map;
-} Queue;
-
-Queue* QueueConstructor();
-void QueueDestructor(Queue*);
-void addToQueue(Queue*, int);
-void popFromQueue(Queue*, int);
-bool checkStop(Queue*, int);
+struct Queue QueueConstructor();
+void addToQueue(struct Queue* queue, int floor, enum Direction direction);
+void popFromQueue(struct Queue* queue, int floor, enum Direction direction);
+bool checkStop(struct Queue queue, int floor, enum Direction direction);
 
 #endif // QUEUE_H

@@ -1,5 +1,5 @@
 SIM := true
-SOURCES := main.c
+SOURCES := queue.c elevatorStatus.c states.c stateController.c main.c
 
 SOURCE_DIR := source
 BUILD_DIR := build
