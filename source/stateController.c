@@ -49,7 +49,7 @@ const struct StateControll allowedStateTransitions[] = {
 int StateCheckChangeValidity(){
     for (int i = 0; i < sizeof(*allowedStateTransitions); ++i){
         if ((stateControll->currentState == allowedStateTransitions[i].currentState)
-        && stateControll->nextState == allowedStateTransitions[i].nextState){
+        && (stateControll->nextState == allowedStateTransitions[i].nextState)){
             return 0;
         }
     }
