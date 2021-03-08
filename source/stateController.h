@@ -21,7 +21,8 @@
  * 
  */
 enum ElevatorStates {
-    STATE_elevatorInit = 0,
+    STARTUP = 0,
+    STATE_elevatorInit,
     STATE_elevatorStandStill,
     STATE_elevatorGoingUp,
     STATE_elevatorGoingDown,

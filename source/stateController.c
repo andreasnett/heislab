@@ -30,6 +30,7 @@ struct StateControll *stateControll;
  * 
  */
 const struct StateControll allowedStateTransitions[] = {
+    {STARTUP, STATE_elevatorInit},
     {STATE_elevatorInit, STATE_elevatorStandStill},
     {STATE_elevatorStandStill, STATE_elevatorGoingDown},
     {STATE_elevatorStandStill, STATE_elevatorGoingUp},
@@ -116,8 +117,8 @@ void StateChange(void){
 ////////////////////////////////////////////////////////////////////////////////
 
 int StateConstructor(void){
-    stateControll = (struct StateControll*)malloc( sizeof (struct StateControll));
-    stateControll->currentState = STATE_elevatorInit;
+    stateControll = (struct StateControll*)malloc(sizeof(struct StateControll));
+    stateControll->currentState = STARTUP;
     stateControll->nextState = STATE_elevatorInit;
 
     return 0;

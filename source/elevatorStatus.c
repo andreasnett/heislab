@@ -2,14 +2,10 @@
 
 #include "elevatorStatus.h"
 
-struct ElevatorStatus *ElevatorStatus;
-
-int ElevatorStatusConstructor(void){
-    ElevatorStatus = (struct ElevatorStatus *)malloc(sizeof(ElevatorStatus));
-
-    return 0;
-}
-
-void ElevatorStatusDesctructor(void){
-    free(ElevatorStatus);
+struct ElevatorStatus ElevatorStatusConstructor(void){
+    struct ElevatorStatus status;
+    status.currentFloor = 3;
+    status.direction = DOWN;
+    status.targetFloor = 0;
+    return status;
 }

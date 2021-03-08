@@ -9,29 +9,24 @@
 
 enum Direction{
     UP,
-    DOWN
+    DOWN,
+    INSIDE
 };
 
 struct ElevatorStatus {
-    enum Direction direction;
+    enum Direction direction;   
     int targetFloor;
     int currentFloor;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-// STRUCT
-////////////////////////////////////////////////////////////////////////////////
-
-extern struct ElevatorStatus *ElevatorStatus;
-
-////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-int ElevatorStatusConstructor(void);
+struct ElevatorStatus ElevatorStatusConstructor(void);
 void ElevatorStatusDesctructor(void);
 void setElevatorStatus(int targetFloor, int currentFloor);
 void getElevatorStatus();
 
 
-#endif
+#endif //ELEVATORSTATE_H

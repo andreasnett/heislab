@@ -11,6 +11,11 @@
 
 #ifndef QUEUE_H
 #define QUEUE_H
+#define FLOOR_ONE 0
+#define FLOOR_TWO 1
+#define FLOOR_THREE 2
+#define FLOOR_FOUR 3
+
 
 #include <stdbool.h>
 #include "elevatorStatus.h"
@@ -27,9 +32,10 @@ struct Queue {
     bool floorFour;
 };
 
-struct Queue QueueConstructor();
-void addToQueue(struct Queue* queue, int floor, enum Direction direction);
-void popFromQueue(struct Queue* queue, int floor, enum Direction direction);
-bool checkStop(struct Queue queue, int floor, enum Direction direction);
+struct Queue queueConstructor();
+int queueAdd(struct Queue* queue, int floor, enum Direction direction);
+int queuePop(struct Queue* queue, int floor, enum Direction direction);
+int queueCheckCall(int floor, enum Direction direction);
+bool queueCheckStop(struct Queue queue, int floor, enum Direction direction);
 
 #endif // QUEUE_H
