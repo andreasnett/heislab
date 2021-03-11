@@ -38,6 +38,6 @@ int queueAdd(struct Queue *queue, int floor, enum Direction direction);
 int queuePop(struct Queue *queue, int floor, enum Direction direction);
 int queueClearAll(struct Queue *queue);
 int queueCheckCall(int *floor, enum Direction *direction);
-bool queueCheckStop(struct Queue queue, int floor, enum Direction direction);
+int queueCheckStop(struct Queue queue, int floor, enum Direction direction);
 
 #endif // QUEUE_H
