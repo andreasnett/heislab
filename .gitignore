@@ -1,4 +1,6 @@
 build
+elevator
+doorOpen
 SimElevatorServer
 SimElevatorServer.exe
 simulator.con
