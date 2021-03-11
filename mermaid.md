@@ -12,27 +12,32 @@ classDiagram
       -ElevatorStatus elevatorStatus
       -boolean EmergencyStop
       -boolean Active
-      +init()
+
     }
 
     class Queue{
-      -Map callQueue
-      +queueAdd(Queue *queue, int floor, Direction direction)
-      +queuePop(Queue *queue, int floor, Direction direction)
-      +queueClearAll(Queue *queue, int floor, Direction direction)
-      +checkStop(int)
+      -bool floorOne
+      -Floor floorTwo
+      -Floor floorThree
+      -bool floorFour
+      +queueAdd(Queue, int, Direction)
+      +queuePop(Queue, int, Direction)
+      +queueClearAll(Queue, int, Direction)
+      +queueCheckStop(Queue, int, Direction)
+      +queueCheckCall(Queue, int, Direction)
     }
 
     class ElevatorStatus{
-      -char[] direction
+      -Direction direction
       -int targetFloor
       -int currentFloor
-      +setState(int, int)
-      +getState()
     }
 
     class FinalStateMachine {
-
+      -ElevatorStates currentState
+      -ElevatorStates nextState
+      +fsmSetNextState(ElevatorStates)
+      +fsmRun()
     }
 ```
 
