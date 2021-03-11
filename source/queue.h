@@ -15,6 +15,7 @@
 #define FLOOR_TWO 1
 #define FLOOR_THREE 2
 #define FLOOR_FOUR 3
+#define FLOOR_NONE 4
 
 
 #include <stdbool.h>
@@ -33,9 +34,10 @@ struct Queue {
 };
 
 struct Queue queueConstructor();
-int queueAdd(struct Queue* queue, int floor, enum Direction direction);
-int queuePop(struct Queue* queue, int floor, enum Direction direction);
-int queueCheckCall(int floor, enum Direction direction);
+int queueAdd(struct Queue *queue, int floor, enum Direction direction);
+int queuePop(struct Queue *queue, int floor, enum Direction direction);
+int queueClearAll(struct Queue *queue);
+int queueCheckCall(int *floor, enum Direction *direction);
 bool queueCheckStop(struct Queue queue, int floor, enum Direction direction);
 
 #endif // QUEUE_H

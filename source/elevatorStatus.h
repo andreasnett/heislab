@@ -16,6 +16,7 @@ enum Direction{
 struct ElevatorStatus {
     enum Direction direction;   
     int targetFloor;
+    int calledFloor;
     int currentFloor;
 };
 

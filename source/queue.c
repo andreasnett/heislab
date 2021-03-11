@@ -103,6 +103,10 @@ int queuePop(struct Queue* queue, int floor, enum Direction direction) {
     return 0;
 };
 
+int queueClearAll(struct Queue *queue){
+    
+}
+
 bool queueCheckStop(struct Queue this, int floor, enum Direction direction) {
     if (floor < 1 || floor > 4) {
         // invalid options
@@ -138,55 +142,55 @@ bool queueCheckStop(struct Queue this, int floor, enum Direction direction) {
     }
 }
 
-int queueCheckCall(int floor, enum Direction direction){
+int queueCheckCall(int *floor, enum Direction *direction){
     if (hardware_read_order(1, HARDWARE_ORDER_UP)){
-        floor = FLOOR_ONE;
-        direction = UP;
+        *floor = FLOOR_ONE;
+        *direction = UP;
         return 1;
     }
     else if (hardware_read_order(FLOOR_ONE, HARDWARE_ORDER_INSIDE)){
-        floor = FLOOR_ONE;
-        direction = INSIDE;
+        *floor = FLOOR_ONE;
+        *direction = INSIDE;
         return 1;
     } 
     else if (hardware_read_order(FLOOR_TWO, HARDWARE_ORDER_UP)){
-        floor = FLOOR_TWO;
-        direction = UP;
+        *floor = FLOOR_TWO;
+        *direction = UP;
         return 1;
     }
     else if (hardware_read_order(FLOOR_TWO, HARDWARE_ORDER_DOWN)){
-        floor = FLOOR_TWO;
-        direction = DOWN;
+        *floor = FLOOR_TWO;
+        *direction = DOWN;
         return 1;
     }
     else if (hardware_read_order(FLOOR_TWO, HARDWARE_ORDER_INSIDE)){
-        floor = FLOOR_TWO;
-        direction = INSIDE;
+        *floor = FLOOR_TWO;
+        *direction = INSIDE;
         return 1;
     }
     else if (hardware_read_order(FLOOR_THREE, HARDWARE_ORDER_UP)){
-        floor = FLOOR_THREE;
-        direction = UP;
+        *floor = FLOOR_THREE;
+        *direction = UP;
         return 1;
     }
     else if (hardware_read_order(FLOOR_THREE, HARDWARE_ORDER_DOWN)){
-        floor = FLOOR_THREE;
-        direction = DOWN;
+        *floor = FLOOR_THREE;
+        *direction = DOWN;
         return 1;
     }
     else if (hardware_read_order(FLOOR_THREE, HARDWARE_ORDER_INSIDE)){
-        floor = FLOOR_THREE;
-        direction = INSIDE;
+        *floor = FLOOR_THREE;
+        *direction = INSIDE;
         return 1;
     }
     else if (hardware_read_order(FLOOR_FOUR, HARDWARE_ORDER_DOWN)){
-        floor = FLOOR_FOUR;
-        direction = DOWN;
+        *floor = FLOOR_FOUR;
+        *direction = DOWN;
         return 1;
     }
     else if (hardware_read_order(FLOOR_FOUR, HARDWARE_ORDER_INSIDE)){
-        floor = FLOOR_FOUR;
-        direction = INSIDE;
+        *floor = FLOOR_FOUR;
+        *direction = INSIDE;
         return 1;
     }
     return 0;

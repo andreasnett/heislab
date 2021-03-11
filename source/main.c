@@ -50,10 +50,8 @@ int main(){
         fprintf(stderr, "Unable to initialize the elevator\n");
         exit(1);
     }
-    
     while(1){
         StateLoop();
     }  
-
     return 0;
 }

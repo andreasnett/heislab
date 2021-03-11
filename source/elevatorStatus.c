@@ -6,6 +6,8 @@ struct ElevatorStatus ElevatorStatusConstructor(void){
     struct ElevatorStatus status;
     status.currentFloor = 3;
     status.direction = DOWN;
+    status.calledFloor = 0;
     status.targetFloor = 0;
     return status;
 }
+

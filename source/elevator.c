@@ -9,8 +9,9 @@ int ElevatorConstructor(void){
     elevator = (struct Elevator*)malloc(sizeof(struct Elevator));
     elevator->elevatorQueue = queueConstructor();
     elevator->elevatorStatus = ElevatorStatusConstructor();
-    elevator->emergencyStop = 0;
-    elevator->active = 0;
+    elevator->emergencyStop = false;
+    elevator->doorOpen = false;
+    elevator->active = false;
     return 0;
 }
 
