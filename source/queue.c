@@ -104,10 +104,10 @@ int queuePop(struct Queue* queue, int floor, enum Direction direction) {
 };
 
 int queueClearAll(struct Queue *queue){
-    
+
 }
 
-bool queueCheckStop(struct Queue this, int floor, enum Direction direction) {
+int queueCheckStop(struct Queue this, int floor, enum Direction direction) {
     if (floor < 1 || floor > 4) {
         // invalid options
         return false;
@@ -143,7 +143,7 @@ bool queueCheckStop(struct Queue this, int floor, enum Direction direction) {
 }
 
 int queueCheckCall(int *floor, enum Direction *direction){
-    if (hardware_read_order(1, HARDWARE_ORDER_UP)){
+    if (hardware_read_order(FLOOR_ONE, HARDWARE_ORDER_UP)){
         *floor = FLOOR_ONE;
         *direction = UP;
         return 1;
@@ -191,6 +191,30 @@ int queueCheckCall(int *floor, enum Direction *direction){
     else if (hardware_read_order(FLOOR_FOUR, HARDWARE_ORDER_INSIDE)){
         *floor = FLOOR_FOUR;
         *direction = INSIDE;
+        return 1;
+    }
+    return 0;
+}
+
+int queueCheckFloorSensor(int *floor){
+    if (hardware_read_floor_sensor(FLOOR_ONE)){
+        *floor = FLOOR_ONE;
+        return 1;
+    }
+    else if (hardware_read_floor_sensor(FLOOR_TWO)){
+        *floor = FLOOR_TWO;
+        return 1;
+    } 
+    else if (hardware_read_floor_sensor(FLOOR_THREE)){
+        *floor = FLOOR_THREE;
+        return 1;
+    }
+    else if (hardware_read_floor_sensor(FLOOR_FOUR)){
+        *floor = FLOOR_FOUR;
+        return 1;
+    }
+    else{
+        *floor = FLOOR_NONE;
         return 1;
     }
     return 0;

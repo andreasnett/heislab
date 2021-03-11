@@ -26,10 +26,12 @@ void EntryStateElevatorStandStill(void){
 }
 void EntryStateElevatorGoingUp(void){
     hardware_command_movement(HARDWARE_MOVEMENT_UP);
+    elevator->elevatorStatus.currentFloor = FLOOR_NONE;
 }
 
 void EntryStateElevatorGoingDown(void){
     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
+    elevator->elevatorStatus.currentFloor = FLOOR_NONE;
 }
 
 void EntryStateElevatorEmergency(void){
@@ -112,7 +114,7 @@ void DoStateElevatorGoingUp(void){
             elevator->elevatorStatus.targetFloor = elevator->elevatorStatus.calledFloor;
         }
     }
-
+    
 }
 
 void DoStateElevatorGoingDown(void){

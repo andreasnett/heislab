@@ -79,6 +79,6 @@ int queueCheckCall(int *floor, enum Direction *direction);
  * @param direction the direction to check
  * @returns whether the floor and direction is present in the queue
  */
-bool queueCheckStop(struct Queue queue, int floor, enum Direction direction);
+int queueCheckStop(struct Queue queue, int floor, enum Direction direction);
 
 #endif // QUEUE_H
