@@ -1,5 +1,5 @@
 /**
- * @file stateController.h
+ * @file fsmControllerer.h
  * @author Steffen Folåsen & Andreas Netteland
  * @brief 
  * @version 1.0
@@ -9,8 +9,8 @@
  * 
  */
 
-#ifndef STATECONTROLLER_H
-#define STATECONTROLLER_H
+#ifndef FSM_H
+#define FSM_H
 
 ////////////////////////////////////////////////////////////////////////////////
 // DEFINES
@@ -35,7 +35,7 @@ enum ElevatorStates {
  * next state is requested, then currentState = nextState.
  * 
  */
-struct StateControll{
+struct FSMController{
     enum ElevatorStates currentState;
     enum ElevatorStates nextState;
 };
@@ -49,24 +49,24 @@ struct StateControll{
  * @p StateConstructor()
  * 
  */
-extern struct StateControll *stateControll;
+extern struct FSMController *fsmController;
 
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief Allocates memory for the global @p stateControll struct. Also sets
+ * @brief Allocates memory for the global @p fsmController struct. Also sets
  * next state to STATE_elevatorInit
  * 
  */
-int StateConstructor(void);
+int fsmControllerConstructor(void);
 
 /**
- * @brief Frees memory for the global @p stateControll struct.
+ * @brief Frees memory for the global @p fsmController struct.
  * 
  */
-void StateDestructor(void);
+void fsmControllerDestructor(void);
 
 /**
  * @brief Everytime this function is called, it will call the function for 
@@ -75,13 +75,13 @@ void StateDestructor(void);
  * continuing the Do state for the new state.
  * 
  */
-void StateLoop(void);
+void fsmRun(void);
 
 /**
  * @brief 
  * 
  * @param nextState 
  */
-void StateSetNext(enum ElevatorStates nextState);
+void fsmSetNextState(enum ElevatorStates nextState);
 
-#endif // STATECONTROLLER_H
+#endif // FSM_H

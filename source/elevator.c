@@ -1,5 +1,8 @@
 
+#include <stdio.h>
 #include <stdlib.h> //For free function
+#include <signal.h>
+#include "hardware.h"
 #include "elevator.h"
 
 
