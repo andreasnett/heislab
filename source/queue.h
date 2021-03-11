@@ -1,6 +1,6 @@
 /**
  * @file queue.h
- * @author your name (you@domain.com)
+ * @author Andreas Netteland og Steffen Folåsen
  * @brief 
  * @version 0.1
  * @date 2021-02-25
