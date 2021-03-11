@@ -22,22 +22,22 @@ void EntryStateElevatorInit(void){
 }
 
 void EntryStateElevatorStandStill(void){
-    printf("Set state ElevatorStandStill\n");
+    printf("Entry state ElevatorStandStill\n");
 
 }
 void EntryStateElevatorGoingUp(void){
-    printf("Set state ElevatorStandGoingUp\n");
+    printf("Entry state ElevatorStandGoingUp\n");
     hardware_command_movement(HARDWARE_MOVEMENT_UP);
     hardware_command_door_open(0);
 }
 
 void EntryStateElevatorGoingDown(void){
-    printf("Set state ElevatorStandGoingDown\n");
+    printf("Entry state ElevatorStandGoingDown\n");
     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 }
 
 void EntryStateElevatorEmergency(void){
-    printf("Set state ElevatorEmergency\n");
+    printf("Entry state ElevatorEmergency\n");
     hardware_command_stop_light(1);
     if(queueCheckFloorSensor(&elevator->elevatorStatus.currentFloor)){
         hardware_command_door_open(1);
@@ -47,7 +47,7 @@ void EntryStateElevatorEmergency(void){
 }
 
 void EntryStateElevatorError(void){
-    printf("Set state ElevatorError\n");
+    printf("Entry state ElevatorError\n");
 
 }
 
@@ -226,20 +226,23 @@ void DoStateElevatorError(void){
 ////////////////////////////////////////////////////////////////////////////////
 
 void ExitStateElevatorInit(void){
+    printf("Exit state ElevatorInit\n");
 
 }
 
 void ExitStateElevatorStandStill(void){
-
+    printf("Exit state ElevatorStandStill\n");
 }
 
 void ExitStateElevatorGoingUp(void){
+    printf("Exit state ElevatorGoingUp\n");
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     queueCheckNewTarget(elevator->elevatorQueue, elevator->elevatorStatus.currentFloor,
     &elevator->elevatorStatus.targetFloor);
 }
 
 void ExitStateElevatorGoingDown(void){
+    printf("Exit state ElevatorGoingDown\n");
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     queueCheckNewTarget(elevator->elevatorQueue, elevator->elevatorStatus.currentFloor,
     &elevator->elevatorStatus.targetFloor);
@@ -247,9 +250,11 @@ void ExitStateElevatorGoingDown(void){
 }
 
 void ExitStateElevatorEmergency(void){
+    printf("Exit state ElevatorEmergency\n");
 
 }
 
 void ExitStateElevatorError(void){
+    printf("Exit state ElevatorError\n");
 
 }
