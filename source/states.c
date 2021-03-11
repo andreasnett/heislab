@@ -205,11 +205,14 @@ void DoStateElevatorGoingDown(void){
 }
 
 void DoStateElevatorEmergency(void){
+    while(!hardware_read_stop_signal()){
 
-    if(!hardware_read_stop_signal()){
-        fsmSetNextState(STATE_elevatorStandStill);
-        hardware_command_stop_light(0);
     }
+    if (elevator->doorOpen){
+        start_t = clock();
+    }
+    fsmSetNextState(STATE_elevatorStandStill);
+    hardware_command_stop_light(0);
 
 }
 
