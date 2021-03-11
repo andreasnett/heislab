@@ -1,7 +1,7 @@
 /**
  * @file queue.h
  * @author Andreas Netteland og Steffen Folåsen
- * @brief 
+ * @brief The queue that keeps track of floors to visit
  * @version 0.1
  * @date 2021-02-25
  * 
@@ -52,10 +52,9 @@ int queueAdd(struct Queue *queue, int floor, enum Direction direction);
  * Remove some floor and direction from the queue 
  * @param queue pointer to which queue to remove floor and direction from
  * @param floor which floor to remove
- * @param direction which direction to remove
  * @returns whether the function failed
  */ 
-int queuePop(struct Queue *queue, int floor, enum Direction direction);
+int queuePop(struct Queue *queue, int floor);
 
 /**
  * Clear all calls from the queue
@@ -80,5 +79,7 @@ int queueCheckCall(int *floor, enum Direction *direction);
  * @returns whether the floor and direction is present in the queue
  */
 int queueCheckStop(struct Queue queue, int floor, enum Direction direction);
+
+int queueCheckFloorSensor(int *floor);
 
 #endif // QUEUE_H

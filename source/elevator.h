@@ -1,7 +1,7 @@
 /**
  * @file elevator.h
  * @author Andreas Netteland og Steffen Folåsen
- * @brief 
+ * @brief The elevator and its member functions
  * @version 0.1
  * @date 2021-02-25
  * 
@@ -26,8 +26,14 @@ struct Elevator {
 
 extern struct Elevator *elevator;
 clock_t start_t, current_t, total_t;
-
+/**
+ * Instanciate a new Elevator. Uses a global variable on the heap.
+ */ 
 int ElevatorConstructor(void);
+
+/**
+ * Delete the global Elevator from the heap.
+ */
 int ElevatorDestructor(void);
 
 #endif //ELEVATORSTATE_H

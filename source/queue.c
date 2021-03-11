@@ -76,7 +76,7 @@ int queueAdd(struct Queue* queue, int floor, enum Direction direction) {
 };
 
 
-int queuePop(struct Queue* queue, int floor, enum Direction direction) {
+int queuePop(struct Queue* queue, int floor) {
     switch (floor)
     {
     case FLOOR_ONE:
@@ -97,9 +97,9 @@ int queuePop(struct Queue* queue, int floor, enum Direction direction) {
         return 1; //Error, floor out of range
         break;
     }
-    hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
-    hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 1);
-    hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
+    hardware_command_order_light(floor, HARDWARE_ORDER_UP, 0);
+    hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 0);
+    hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 0);
     return 0;
 };
 

@@ -1,7 +1,7 @@
 /**
  * @file fsmControllerer.h
  * @author Steffen Folåsen & Andreas Netteland
- * @brief 
+ * @brief The final state machine for the elevator
  * @version 1.0
  * @date 2021-03-04
  * 

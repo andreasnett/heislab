@@ -11,3 +11,7 @@ struct ElevatorStatus ElevatorStatusConstructor(void){
     return status;
 }
 
+
+void ElevatorStatusDesctructor(struct ElevatorStatus *elevatorStatus) {
+    free(elevatorStatus);
+}
