@@ -20,7 +20,7 @@ struct Queue queueConstructor() {
 int queueAdd(struct Queue* queue, int floor, enum Direction direction) {
     switch (floor)
     {
-    case 1:
+    case FLOOR_ONE:
         if (direction == UP){
             hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
         }
@@ -29,7 +29,7 @@ int queueAdd(struct Queue* queue, int floor, enum Direction direction) {
         }
         queue->floorOne = true;
         break;
-    case 2:
+    case FLOOR_TWO:
         if (direction == UP) {
             queue->floorTwo.up = true;
             hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
@@ -44,7 +44,7 @@ int queueAdd(struct Queue* queue, int floor, enum Direction direction) {
             hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
         }
         break;
-    case 3:
+    case FLOOR_THREE:
         if (direction == UP) {
             queue->floorThree.up = true;
             hardware_command_order_light(floor, HARDWARE_ORDER_UP, 1);
@@ -59,7 +59,7 @@ int queueAdd(struct Queue* queue, int floor, enum Direction direction) {
             hardware_command_order_light(floor, HARDWARE_ORDER_INSIDE, 1);
         }
         break;
-    case 4:
+    case FLOOR_FOUR:
         if (direction == DOWN){
             hardware_command_order_light(floor, HARDWARE_ORDER_DOWN, 1);
         }
@@ -103,38 +103,41 @@ int queuePop(struct Queue* queue, int floor) {
     return 0;
 };
 
-int queueClearAll(struct Queue *queue){
-
+void queueClearAll(struct Queue *queue){
+    queue->floorOne = false;
+    queue->floorTwo.down = false;
+    queue->floorTwo.up = false;
+    queue->floorThree.down = false;
+    queue->floorThree.up = false;
+    queue->floorFour = false;
 }
 
-int queueCheckStop(struct Queue this, int floor, enum Direction direction) {
-    if (floor < 1 || floor > 4) {
-        // invalid options
-        return false;
-    };
+bool queueCheckStop(struct Queue queue, int floor, enum Direction direction) {
     switch (floor)
     {
-    case 1:
-        return this.floorOne;
+    case FLOOR_ONE:
+        return queue.floorOne;
         break;
-    case 2:
+    case FLOOR_TWO:
         if (direction == UP) {
-            return this.floorTwo.up;
+            return queue.floorTwo.up;
         } 
         else if (direction == DOWN) {
-            return this.floorTwo.down;
+            return queue.floorTwo.down;
         } 
-        else return false;
+        return false;
         break;
-    case 3:
+    case FLOOR_THREE:
         if (direction == UP) {
-            return this.floorThree.up;
-        } else if (direction == DOWN) {
-            return this.floorThree.down;
-        } else return false;
+            return queue.floorThree.up;
+        } 
+        else if (direction == DOWN) {
+            return queue.floorThree.down;
+        } 
+        return false;
         break;
-    case 4:
-        return this.floorFour;
+    case FLOOR_FOUR:
+        return queue.floorFour;
         break;
     default:
         return false;
@@ -211,10 +214,6 @@ int queueCheckFloorSensor(int *floor){
     }
     else if (hardware_read_floor_sensor(FLOOR_FOUR)){
         *floor = FLOOR_FOUR;
-        return 1;
-    }
-    else{
-        *floor = FLOOR_NONE;
         return 1;
     }
     return 0;

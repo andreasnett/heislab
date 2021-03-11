@@ -1,7 +1,7 @@
 /**
  * @file elevatorStatus.h
  * @author Andreas Netteland og Steffen Folåsen
- * @brief 
+ * @brief The internal states of the elevator
  * @version 0.1
  * @date 2021-02-25
  * 
@@ -27,7 +27,6 @@ enum Direction{
 struct ElevatorStatus {
     enum Direction direction;   
     int targetFloor;
-    int calledFloor;
     int currentFloor;
 };
 
@@ -35,14 +34,18 @@ struct ElevatorStatus {
 // FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * Instanciate a new elevatorStatus
- * @returns 
- * 
+ * Instanciate a new ElevatorStatus
+ * @returns the new ElevatorStatus struct
  */
 struct ElevatorStatus ElevatorStatusConstructor(void);
-void ElevatorStatusDesctructor(void);
+
+/**
+ * Set the status of the elevator
+ * @param targetFloor the floor the elevator is headed to
+ * @param currentFloor the floor the elevator is currently at
+ */
 void setElevatorStatus(int targetFloor, int currentFloor);
-void getElevatorStatus();
+
 
 
 #endif //ELEVATORSTATE_H

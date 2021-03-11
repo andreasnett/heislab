@@ -61,7 +61,7 @@ int queuePop(struct Queue *queue, int floor);
  * @param queue the queue to be cleared
  * @returns whether the function failed
  */
-int queueClearAll(struct Queue *queue);
+void queueClearAll(struct Queue *queue);
 
 /**
  * Check if the button for some floor is pressed in
@@ -78,7 +78,7 @@ int queueCheckCall(int *floor, enum Direction *direction);
  * @param direction the direction to check
  * @returns whether the floor and direction is present in the queue
  */
-int queueCheckStop(struct Queue queue, int floor, enum Direction direction);
+bool queueCheckStop(struct Queue queue, int floor, enum Direction direction);
 
 int queueCheckFloorSensor(int *floor);
 
