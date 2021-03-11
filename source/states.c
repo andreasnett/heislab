@@ -38,7 +38,6 @@ void EntryStateElevatorGoingDown(void){
 
 void EntryStateElevatorEmergency(void){
     printf("Set state ElevatorEmergency\n");
-    hardware_command_movement(HARDWARE_MOVEMENT_STOP);
     hardware_command_stop_light(1);
     if(queueCheckFloorSensor(&elevator->elevatorStatus.currentFloor)){
         hardware_command_door_open(1);
@@ -48,6 +47,7 @@ void EntryStateElevatorEmergency(void){
 }
 
 void EntryStateElevatorError(void){
+    printf("Set state ElevatorError\n");
 
 }
 
@@ -83,10 +83,7 @@ void DoStateElevatorStandStill(void){
     }
 
     if(queueCheckCall(&calledFloor, &elevator->elevatorStatus.direction)){
-        printf("Current floor %i\n", elevator->elevatorStatus.currentFloor);
-        printf("Called floor and Dir %i %i\n", calledFloor, elevator->elevatorStatus.direction);
         if (elevator->elevatorStatus.currentFloor == calledFloor){
-            printf("Door open in Standstill\n");
             hardware_command_door_open(1);
             elevator->doorOpen = true;
             start_t = clock();
