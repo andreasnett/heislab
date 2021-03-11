@@ -21,7 +21,7 @@ struct Elevator {
     struct ElevatorStatus elevatorStatus;
     bool emergencyStop;
     bool doorOpen;
-    bool active;
+    bool afterEmergency;
 };
 
 extern struct Elevator *elevator;

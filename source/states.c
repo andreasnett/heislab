@@ -45,7 +45,11 @@ void EntryStateElevatorEmergency(void){
     queueClearAll(&elevator->elevatorQueue);
     while(hardware_read_stop_signal()){
 
+        }
+    if (elevator->doorOpen){
+            start_t = clock();
     }
+    hardware_command_stop_light(0);
 }
 
 void EntryStateElevatorError(void){
@@ -86,9 +90,22 @@ void DoStateElevatorStandStill(void){
 
     if(queueCheckCall(&calledFloor, &elevator->elevatorStatus.direction)){
         if (elevator->elevatorStatus.currentFloor == calledFloor){
-            hardware_command_door_open(1);
-            elevator->doorOpen = true;
-            start_t = clock();
+            if (elevator->afterEmergency){
+                if ((elevator->elevatorStatus.targetFloor - elevator->elevatorStatus.currentFloor) > 0){
+                    elevator->elevatorStatus.currentFloor = elevator->elevatorStatus.currentFloor + 1;
+                    elevator->elevatorStatus.targetFloor = calledFloor;
+                }
+                else if ((elevator->elevatorStatus.targetFloor - elevator->elevatorStatus.currentFloor) < 0){
+                    elevator->elevatorStatus.currentFloor = elevator->elevatorStatus.currentFloor - 1;
+                    elevator->elevatorStatus.targetFloor = calledFloor;
+                }
+                elevator->afterEmergency = false;
+            }
+            else{
+                hardware_command_door_open(1);
+                elevator->doorOpen = true;
+                start_t = clock();
+            }
         }
         else{
             queueAdd(&elevator->elevatorQueue, calledFloor, elevator->elevatorStatus.direction);
@@ -102,11 +119,11 @@ void DoStateElevatorStandStill(void){
     }
 
     if ((elevator->elevatorStatus.targetFloor > elevator->elevatorStatus.currentFloor) 
-        && !elevator->doorOpen){
+        && !elevator->doorOpen && !elevator->afterEmergency){
         fsmSetNextState(STATE_elevatorGoingUp);    
     }
     else if ((elevator->elevatorStatus.targetFloor < elevator->elevatorStatus.currentFloor) 
-        && !elevator->doorOpen){
+        && !elevator->doorOpen && !elevator->afterEmergency){
         fsmSetNextState(STATE_elevatorGoingDown);    
     }
 }
@@ -207,35 +224,7 @@ void DoStateElevatorGoingDown(void){
 }
 
 void DoStateElevatorEmergency(void){
-    enum Direction callDirection = DOWN;
-    int calledFloor = FLOOR_NONE;
-
-    hardware_command_stop_light(0);
-
-    if(queueCheckCall(&calledFloor, &callDirection)){
-        queueAdd(&elevator->elevatorQueue, calledFloor,
-        callDirection);
-        if ((calledFloor == elevator->elevatorStatus.currentFloor)){
-            if ((elevator->elevatorStatus.targetFloor - elevator->elevatorStatus.currentFloor) > 0){
-                elevator->elevatorStatus.currentFloor = elevator->elevatorStatus.currentFloor + 1;
-                elevator->elevatorStatus.targetFloor = calledFloor;
-            }
-            else if ((elevator->elevatorStatus.targetFloor - elevator->elevatorStatus.currentFloor) < 0){
-                elevator->elevatorStatus.currentFloor = elevator->elevatorStatus.currentFloor - 1;
-                elevator->elevatorStatus.targetFloor = calledFloor;
-            }
-        }
-        else if (calledFloor < elevator->elevatorStatus.currentFloor){
-            elevator->elevatorStatus.targetFloor = calledFloor;
-        }
-        else if(calledFloor > elevator->elevatorStatus.currentFloor){
-            elevator->elevatorStatus.targetFloor = calledFloor;
-        }
-        if (elevator->doorOpen){
-            start_t = clock();
-        }
-        fsmSetNextState(STATE_elevatorStandStill);
-    }
+    fsmSetNextState(STATE_elevatorStandStill);
 }
 
 void DoStateElevatorError(void){
@@ -274,6 +263,7 @@ void ExitStateElevatorGoingDown(void){
 
 void ExitStateElevatorEmergency(void){
     printf("Exit state ElevatorEmergency\n");
+    elevator->afterEmergency = true;
 }
 
 void ExitStateElevatorError(void){

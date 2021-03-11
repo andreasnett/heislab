@@ -14,7 +14,7 @@ int ElevatorConstructor(void){
     elevator->elevatorStatus = ElevatorStatusConstructor();
     elevator->emergencyStop = false;
     elevator->doorOpen = false;
-    elevator->active = false;
+    elevator->afterEmergency = false;
     return 0;
 }
 
