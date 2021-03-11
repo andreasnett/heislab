@@ -5,29 +5,34 @@
 ```mermaid
 classDiagram
     Elevator <|-- Queue
-    Elevator <|-- ElevatorState
+    Elevator <|-- ElevatorStatus
+    FinalStateMachine <|-- Elevator
     class Elevator{
-      -Queue queue
-      -ElevatorState state
+      -Queue elevatorQueue
+      -ElevatorStatus elevatorStatus
       -boolean EmergencyStop
       -boolean Active
       +init()
-      +activate() /* loop */
     }
 
     class Queue{
       -Map callQueue
-      +addToQueue(int)
-      +popFromQueue(int)
+      +queueAdd(Queue *queue, int floor, Direction direction)
+      +queuePop(Queue *queue, int floor, Direction direction)
+      +queueClearAll(Queue *queue, int floor, Direction direction)
       +checkStop(int)
     }
 
-    class ElevatorState{
+    class ElevatorStatus{
       -char[] direction
       -int targetFloor
       -int currentFloor
       +setState(int, int)
       +getState()
+    }
+
+    class FinalStateMachine {
+
     }
 ```
 
