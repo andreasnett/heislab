@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include "states.h"
 #include "hardware.h"
@@ -44,6 +43,9 @@ void EntryStateElevatorEmergency(void){
         elevator->doorOpen = true;
     }
     queueClearAll(&elevator->elevatorQueue);
+    while(hardware_read_stop_signal()){
+
+    }
 }
 
 void EntryStateElevatorError(void){
@@ -205,17 +207,35 @@ void DoStateElevatorGoingDown(void){
 }
 
 void DoStateElevatorEmergency(void){
-    while(!hardware_read_stop_signal()){
+    enum Direction callDirection = DOWN;
+    int calledFloor = FLOOR_NONE;
 
-    }
-    if (elevator->doorOpen){
-        start_t = clock();
-    }
-    fsmSetNextState(STATE_elevatorStandStill);
-    printf("yo b4\n");
     hardware_command_stop_light(0);
-    printf("yo\n");
 
+    if(queueCheckCall(&calledFloor, &callDirection)){
+        queueAdd(&elevator->elevatorQueue, calledFloor,
+        callDirection);
+        if ((calledFloor == elevator->elevatorStatus.currentFloor)){
+            if ((elevator->elevatorStatus.targetFloor - elevator->elevatorStatus.currentFloor) > 0){
+                elevator->elevatorStatus.currentFloor = elevator->elevatorStatus.currentFloor + 1;
+                elevator->elevatorStatus.targetFloor = calledFloor;
+            }
+            else if ((elevator->elevatorStatus.targetFloor - elevator->elevatorStatus.currentFloor) < 0){
+                elevator->elevatorStatus.currentFloor = elevator->elevatorStatus.currentFloor - 1;
+                elevator->elevatorStatus.targetFloor = calledFloor;
+            }
+        }
+        else if (calledFloor < elevator->elevatorStatus.currentFloor){
+            elevator->elevatorStatus.targetFloor = calledFloor;
+        }
+        else if(calledFloor > elevator->elevatorStatus.currentFloor){
+            elevator->elevatorStatus.targetFloor = calledFloor;
+        }
+        if (elevator->doorOpen){
+            start_t = clock();
+        }
+        fsmSetNextState(STATE_elevatorStandStill);
+    }
 }
 
 void DoStateElevatorError(void){
@@ -234,6 +254,7 @@ void ExitStateElevatorInit(void){
 
 void ExitStateElevatorStandStill(void){
     printf("Exit state ElevatorStandStill\n");
+    
 }
 
 void ExitStateElevatorGoingUp(void){
@@ -253,7 +274,6 @@ void ExitStateElevatorGoingDown(void){
 
 void ExitStateElevatorEmergency(void){
     printf("Exit state ElevatorEmergency\n");
-
 }
 
 void ExitStateElevatorError(void){

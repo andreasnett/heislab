@@ -9,7 +9,7 @@
  * 
  */
 #include <stdlib.h> //For free function
-
+#include <stdio.h>
 #include "fsm.h"
 #include "states.h"
 
@@ -48,12 +48,15 @@ const struct FSMController allowedStateTransitions[] = {
 ////////////////////////////////////////////////////////////////////////////////
 
 int fsmCheckChangeValidity(){
-    for (int i = 0; i < sizeof(*allowedStateTransitions); ++i){
+    for (int i = 0; i < sizeof(allowedStateTransitions); ++i){
         if ((fsmController->currentState == allowedStateTransitions[i].currentState)
         && (fsmController->nextState == allowedStateTransitions[i].nextState)){
             return 0;
         }
     }
+    //if((fsmController->currentState == STATE_elevatorEmergency)&&(fsmController->nextState == STATE_elevatorStandStill)){
+    //    return 0;
+    //}
     fsmSetNextState(STATE_elevatorError);
     return 1;
 }
