@@ -212,6 +212,7 @@ void DoStateElevatorEmergency(void){
         start_t = clock();
     }
     fsmSetNextState(STATE_elevatorStandStill);
+    printf("yo b4\n");
     hardware_command_stop_light(0);
     printf("yo\n");
 
