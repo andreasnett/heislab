@@ -82,4 +82,6 @@ bool queueCheckStop(struct Queue queue, int floor, enum Direction direction);
 
 int queueCheckFloorSensor(int *floor);
 
+int queueCheckNewTarget(struct Queue queue, int currentFloor, int *newTargetFloor);
+
 #endif // QUEUE_H

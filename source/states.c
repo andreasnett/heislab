@@ -43,8 +43,8 @@ void EntryStateElevatorEmergency(void){
     if(queueCheckFloorSensor(&elevator->elevatorStatus.currentFloor)){
         hardware_command_door_open(1);
         elevator->doorOpen = true;
-        start_t = clock();
     }
+    queueClearAll(&elevator->elevatorQueue);
 }
 
 void EntryStateElevatorError(void){
@@ -94,7 +94,6 @@ void DoStateElevatorStandStill(void){
         else{
             queueAdd(&elevator->elevatorQueue, calledFloor, elevator->elevatorStatus.direction);
         }
-        
         if (calledFloor > elevator->elevatorStatus.targetFloor){
             elevator->elevatorStatus.targetFloor = calledFloor;
         }
@@ -236,10 +235,15 @@ void ExitStateElevatorStandStill(void){
 
 void ExitStateElevatorGoingUp(void){
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+    queueCheckNewTarget(elevator->elevatorQueue, elevator->elevatorStatus.currentFloor,
+    &elevator->elevatorStatus.targetFloor);
 }
 
 void ExitStateElevatorGoingDown(void){
     hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+    queueCheckNewTarget(elevator->elevatorQueue, elevator->elevatorStatus.currentFloor,
+    &elevator->elevatorStatus.targetFloor);
+    
 }
 
 void ExitStateElevatorEmergency(void){

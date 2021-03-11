@@ -104,12 +104,11 @@ int queuePop(struct Queue* queue, int floor) {
 };
 
 void queueClearAll(struct Queue *queue){
-    queue->floorOne = false;
-    queue->floorTwo.down = false;
-    queue->floorTwo.up = false;
-    queue->floorThree.down = false;
-    queue->floorThree.up = false;
-    queue->floorFour = false;
+    queuePop(queue, FLOOR_ONE);
+    queuePop(queue, FLOOR_TWO);
+    queuePop(queue, FLOOR_THREE);
+    queuePop(queue, FLOOR_FOUR);
+    
 }
 
 bool queueCheckStop(struct Queue queue, int floor, enum Direction direction) {
@@ -216,5 +215,96 @@ int queueCheckFloorSensor(int *floor){
         *floor = FLOOR_FOUR;
         return 1;
     }
+    return 0;
+}
+
+int queueCheckNewTarget(struct Queue queue, int currentFloor, int *newTargetFloor){
+    switch (currentFloor)
+    {
+    case FLOOR_ONE:
+        if (queue.floorFour){
+            *newTargetFloor = FLOOR_FOUR;
+            return 1;
+        }
+        else if (queue.floorThree.up){
+            *newTargetFloor = FLOOR_THREE;
+            return 1;
+        }
+        else if (queue.floorThree.down){
+            *newTargetFloor = FLOOR_THREE;
+            return 1;
+        }
+        else if (queue.floorTwo.up){
+            *newTargetFloor = FLOOR_TWO;
+            return 1;
+        }
+        else if (queue.floorTwo.down){
+            *newTargetFloor = FLOOR_TWO;
+            return 1;
+        }
+        break;
+    case FLOOR_TWO:
+        if (queue.floorOne){
+            *newTargetFloor = FLOOR_ONE;
+            return 1;
+        }
+        else if (queue.floorFour){
+            *newTargetFloor = FLOOR_FOUR;
+            return 1;
+        }
+        else if (queue.floorThree.up){
+            *newTargetFloor = FLOOR_THREE;
+            return 1;
+        }
+        else if (queue.floorThree.down){
+            *newTargetFloor = FLOOR_THREE;
+            return 1;
+        }
+        break;
+    case FLOOR_THREE:
+        if (queue.floorFour){
+            *newTargetFloor = FLOOR_FOUR;
+            return 1;
+        }
+        else if (queue.floorOne){
+            *newTargetFloor = FLOOR_ONE;
+            return 1;
+        }
+        else if (queue.floorTwo.up){
+            *newTargetFloor = FLOOR_TWO;
+            return 1;
+        }
+        else if (queue.floorTwo.down){
+            *newTargetFloor = FLOOR_TWO;
+            return 1;
+        }
+        break;
+    case FLOOR_FOUR:
+        if (queue.floorOne){
+            *newTargetFloor = FLOOR_ONE;
+            return 1;
+        }
+        else if (queue.floorTwo.up){
+            *newTargetFloor = FLOOR_TWO;
+            return 1;
+        }
+        else if (queue.floorTwo.down){
+            *newTargetFloor = FLOOR_TWO;
+            return 1;
+        }
+        else if (queue.floorThree.up){
+            *newTargetFloor = FLOOR_THREE;
+            return 1;
+        }
+        else if (queue.floorThree.down){
+            *newTargetFloor = FLOOR_THREE;
+            return 1;
+        }
+        break;
+    default:
+        break;
+    }
+
+
     return 0;
 }
