@@ -1,5 +1,5 @@
 /**
- * @file stateController.c
+ * @file fsmControllerer.c
  * @author Steffen Folåsen & Andreas Netteland
  * @brief 
  * @version 1.0
@@ -10,7 +10,7 @@
  */
 #include <stdlib.h> //For free function
 
-#include "stateController.h"
+#include "fsm.h"
 #include "states.h"
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,17 +19,17 @@
 
 /**
  * @brief Global struct for controlling the FSM. Needs to be initialized with
- * @p StateConstructor()
+ * @p fsmControllerConstructor()
  * 
  */
-struct StateControll *stateControll;
+struct FSMController *fsmController;
 
 /**
  * @brief Contains all allowed transistions from a currentState to a nextState.
  * For a better representation of the FSM, see (TODO)
  * 
  */
-const struct StateControll allowedStateTransitions[] = {
+const struct FSMController allowedStateTransitions[] = {
     {STARTUP, STATE_elevatorInit},
     {STATE_elevatorInit, STATE_elevatorStandStill},
     {STATE_elevatorStandStill, STATE_elevatorGoingDown},
@@ -47,20 +47,20 @@ const struct StateControll allowedStateTransitions[] = {
 // LOCAL FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-int StateCheckChangeValidity(){
+int fsmCheckChangeValidity(){
     for (int i = 0; i < sizeof(*allowedStateTransitions); ++i){
-        if ((stateControll->currentState == allowedStateTransitions[i].currentState)
-        && (stateControll->nextState == allowedStateTransitions[i].nextState)){
+        if ((fsmController->currentState == allowedStateTransitions[i].currentState)
+        && (fsmController->nextState == allowedStateTransitions[i].nextState)){
             return 0;
         }
     }
-    StateSetNext(STATE_elevatorError);
+    fsmSetNextState(STATE_elevatorError);
     return 1;
 }
 
-void StateChange(void){
+void fsmChangeState(void){
 
-    switch (stateControll->currentState)
+    switch (fsmController->currentState)
     {
     case STATE_elevatorInit:
         ExitStateElevatorInit();
@@ -84,9 +84,9 @@ void StateChange(void){
         break;
     }
 
-    stateControll->currentState = stateControll->nextState;
+    fsmController->currentState = fsmController->nextState;
 
-    switch (stateControll->nextState)
+    switch (fsmController->nextState)
     {
     case STATE_elevatorInit:
         EntryStateElevatorInit();
@@ -116,21 +116,21 @@ void StateChange(void){
 // GLOBAL FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
 
-int StateConstructor(void){
-    stateControll = (struct StateControll*)malloc(sizeof(struct StateControll));
-    stateControll->currentState = STARTUP;
-    stateControll->nextState = STATE_elevatorInit;
+int fsmControllerConstructor(void){
+    fsmController = (struct FSMController*)malloc(sizeof(struct FSMController));
+    fsmController->currentState = STARTUP;
+    fsmController->nextState = STATE_elevatorInit;
 
     return 0;
 }
 
-void StateDestructor(void){
-    free(stateControll);
+void fsmControllerDestructor(void){
+    free(fsmController);
 }
 
-void StateLoop(void){
-    if (stateControll->currentState == stateControll->nextState){
-        switch (stateControll->currentState)
+void fsmRun(void){
+    if (fsmController->currentState == fsmController->nextState){
+        switch (fsmController->currentState)
         {
         case STATE_elevatorInit:
             DoStateElevatorInit();
@@ -155,11 +155,11 @@ void StateLoop(void){
         }
     }
     else{
-        StateCheckChangeValidity();
-        StateChange();
+        fsmCheckChangeValidity();
+        fsmChangeState();
     }
 }
 
-void StateSetNext(enum ElevatorStates nextState){
-    stateControll->nextState = nextState;
+void fsmSetNextState(enum ElevatorStates nextState){
+    fsmController->nextState = nextState;
 }

@@ -5,7 +5,7 @@
 #include "queue.h"
 #include "elevatorStatus.h"
 #include "elevator.h"
-#include "stateController.h"
+#include "fsm.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // ENTRY STATES
@@ -50,14 +50,14 @@ void DoStateElevatorInit(void){
     if(hardware_read_floor_sensor(FLOOR_ONE)){
         elevator->elevatorStatus.currentFloor = FLOOR_ONE;
         hardware_command_movement(HARDWARE_MOVEMENT_STOP);
-        StateSetNext(STATE_elevatorStandStill);
+        fsmSetNextState(STATE_elevatorStandStill);
     }  
 }
 
 void DoStateElevatorStandStill(void){
 
     if (hardware_read_stop_signal()){
-        StateSetNext(STATE_elevatorEmergency);
+        fsmSetNextState(STATE_elevatorEmergency);
         return;
     }
 
@@ -87,44 +87,37 @@ void DoStateElevatorStandStill(void){
     if ((elevator->elevatorStatus.calledFloor > elevator->elevatorStatus.targetFloor) && 
         (elevator->elevatorStatus.direction == UP) && !elevator->doorOpen){
             elevator->elevatorStatus.targetFloor = elevator->elevatorStatus.calledFloor;
-            StateSetNext(STATE_elevatorGoingUp);
+            fsmSetNextState(STATE_elevatorGoingUp);
         }
         else if((elevator->elevatorStatus.calledFloor < elevator->elevatorStatus.targetFloor) && 
         (elevator->elevatorStatus.direction == DOWN) && !elevator->doorOpen){
             elevator->elevatorStatus.targetFloor = elevator->elevatorStatus.calledFloor;
-            StateSetNext(STATE_elevatorGoingDown);
+            fsmSetNextState(STATE_elevatorGoingDown);
     }
 }
 
 void DoStateElevatorGoingUp(void){
-    enum Direction callDir;
+    enum Direction callDirection;
 
     if (hardware_read_stop_signal()){
-        StateSetNext(STATE_elevatorEmergency);
+        fsmSetNextState(STATE_elevatorEmergency);
         return;
     }
 
     if(queueCheckCall(&elevator->elevatorStatus.calledFloor, 
-    &callDir)){
-
-        
+    &callDirection)){
         queueAdd(&elevator->elevatorQueue, elevator->elevatorStatus.calledFloor,
-        elevator->elevatorStatus.direction);
-        if ((elevator->elevatorStatus.calledFloor > elevator->elevatorStatus.targetFloor) && 
-        elevator->elevatorStatus.direction == UP){
+        callDirection);
+        if (elevator->elevatorStatus.calledFloor > elevator->elevatorStatus.targetFloor){
             elevator->elevatorStatus.targetFloor = elevator->elevatorStatus.calledFloor;
-        }
-        else if((elevator->elevatorStatus.calledFloor < elevator->elevatorStatus.targetFloor) && 
-        elevator->elevatorStatus.direction == DOWN){
-            elevator->elevatorStatus.targetFloor = elevator->elevatorStatus.calledFloor;
-            
         }
     }
+
 }
 
 void DoStateElevatorGoingDown(void){
     if (!hardware_read_stop_signal()){
-        StateSetNext(STATE_elevatorInit);
+        fsmSetNextState(STATE_elevatorInit);
         return;
     }
 }

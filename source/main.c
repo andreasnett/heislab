@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include "hardware.h"
-#include "stateController.h"
+#include "fsm.h"
 #include "elevatorStatus.h"
 #include "elevator.h"
 
@@ -21,7 +21,7 @@ static void clear_all_order_lights(){
     }
 }
 
-int elevator_init(){
+int main_init(){
     int error = 0;
     error = hardware_init();
     if(error){
@@ -29,9 +29,9 @@ int elevator_init(){
         return 1;
     }
 
-    error = StateConstructor();
+    error = fsmControllerConstructor();
     if (error){
-        fprintf(stderr, "Unable to initialize the StateConstructor\n" );
+        fprintf(stderr, "Unable to initialize the fsmController struct\n" );
         return 2;
     }
 
@@ -43,15 +43,21 @@ int elevator_init(){
     return 0;
 }
 
+int main_cleanup(){
+    return 0;
+}
 
 int main(){
-    int error = elevator_init();
+    int error = main_init();
     if(error){
         fprintf(stderr, "Unable to initialize the elevator\n");
         exit(1);
     }
     while(1){
-        StateLoop();
-    }  
+        fsmRun();
+    }
+
+    main_cleanup();
+
     return 0;
 }
