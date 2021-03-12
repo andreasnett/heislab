@@ -91,7 +91,6 @@ void DoStateElevatorStandStill(void){
                     elevator->elevatorStatus.currentFloor = elevator->elevatorStatus.currentFloor - 1;
                     elevator->elevatorStatus.targetFloor = calledFloor;
                 }
-                elevator->afterEmergency = false;
             }
             else{
                 hardware_command_door_open(1);
