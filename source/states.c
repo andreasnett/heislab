@@ -42,14 +42,6 @@ void EntryStateElevatorEmergency(void){
         hardware_command_door_open(1);
         elevator->doorOpen = true;
     }
-    queueClearAll(&elevator->elevatorQueue);
-    while(hardware_read_stop_signal()){
-
-        }
-    if (elevator->doorOpen){
-            start_t = clock();
-    }
-    hardware_command_stop_light(0);
 }
 
 void EntryStateElevatorError(void){
@@ -116,6 +108,7 @@ void DoStateElevatorStandStill(void){
         else if((calledFloor < elevator->elevatorStatus.targetFloor)){
             elevator->elevatorStatus.targetFloor = calledFloor;
         }
+        elevator->afterEmergency = false;
     }
 
     if ((elevator->elevatorStatus.targetFloor > elevator->elevatorStatus.currentFloor) 
@@ -224,7 +217,15 @@ void DoStateElevatorGoingDown(void){
 }
 
 void DoStateElevatorEmergency(void){
-    fsmSetNextState(STATE_elevatorStandStill);
+    queueClearAll(&elevator->elevatorQueue);
+    if(!hardware_read_stop_signal()){
+        if (elevator->doorOpen){
+            start_t = clock();
+        }
+        hardware_command_stop_light(0);
+        fsmSetNextState(STATE_elevatorStandStill);
+    }
+
 }
 
 void DoStateElevatorError(void){
