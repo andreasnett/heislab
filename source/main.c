@@ -3,7 +3,6 @@
 #include <signal.h>
 #include "hardware.h"
 #include "fsm.h"
-#include "elevatorStatus.h"
 #include "elevator.h"
 
 int main_init(){
