@@ -12,18 +12,26 @@
 #ifndef ELEVATORSTATE_H
 #define ELEVATORSTATE_H
 
-#include <stdbool.h>
-
 ////////////////////////////////////////////////////////////////////////////////
 // DEFINES
 ////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * @brief Struct for containing call direction
+ * 
+ */
 enum Direction{
     UP,
     DOWN,
     INSIDE
 };
 
+/**
+ * @brief struct cointaining the last current floor of the elevator, as well as
+ * a target floor which is the floor furthest away in the queue depending on
+ * the elevators direction 
+ * 
+ */
 struct ElevatorStatus {
     enum Direction direction;   
     int targetFloor;
@@ -33,19 +41,11 @@ struct ElevatorStatus {
 ////////////////////////////////////////////////////////////////////////////////
 // FUNCTIONS
 ////////////////////////////////////////////////////////////////////////////////
+
 /**
- * Instanciate a new ElevatorStatus
+ * @brief Instanciate a new ElevatorStatus
  * @returns the new ElevatorStatus struct
  */
 struct ElevatorStatus ElevatorStatusConstructor(void);
-
-/**
- * Set the status of the elevator
- * @param targetFloor the floor the elevator is headed to
- * @param currentFloor the floor the elevator is currently at
- */
-void setElevatorStatus(int targetFloor, int currentFloor);
-
-
 
 #endif //ELEVATORSTATE_H

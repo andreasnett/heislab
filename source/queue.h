@@ -11,77 +11,111 @@
 
 #ifndef QUEUE_H
 #define QUEUE_H
-#define FLOOR_ONE 0
-#define FLOOR_TWO 1
-#define FLOOR_THREE 2
-#define FLOOR_FOUR 3
-#define FLOOR_NONE 4
 
-
-#include <stdbool.h>
+#include <hardware.h>
 #include "elevatorStatus.h"
 
-struct Floor{
-    bool up;
-    bool down;
-};
+////////////////////////////////////////////////////////////////////////////////
+// DEFINES
+////////////////////////////////////////////////////////////////////////////////
 
-struct Queue {
-    bool floorOne;
-    struct Floor floorTwo;
-    struct Floor floorThree;
-    bool floorFour;
+#define FIRST_FLOOR 0
+#define NUMBER_OF_FLOORS HARDWARE_NUMBER_OF_FLOORS - 2
+#define LAST_FLOOR NUMBER_OF_FLOORS + 1
+#define FLOOR_NONE -1
+
+/**
+ * @brief Floor thet is called with up or down button. If the floor is called
+ * from the elevator, both will be high.
+ * 
+ */
+struct Floor{
+    int up;
+    int down;
 };
 
 /**
- * Instanciate the queue
- * @returns a new queue
+ * @brief Queue that contains a first and last floor. To add more floors, the
+ * HARDWARE_NUMBER_OF_FLOORS in hardware.h should be changed. 
+ * 
+ * @note first and last floor only contain one value, as these only have one
+ * button
+ * 
+ */
+struct Queue {
+    int firstFloor;
+    struct Floor floor[NUMBER_OF_FLOORS];
+    int lastFloor;
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Instanciate the queue. It makes every parameter in the @p Queue struct 0
+ * @returns struct Queue a new queue
  */ 
 struct Queue queueConstructor();
 
 /**
- * Add some floor and direction to the queue
- * @param queue pointer to which queue to add floor and direction too
+ * @brief Add some floor and direction to the queue
+ * @param queue a pointer to a queue struct cointaing the queue for floor calls
  * @param floor which floor to add
  * @param direction which direction to add
- * @returns whether the function failed
+ * @returns int 0 if no floor was added, else 1
  */ 
 int queueAdd(struct Queue *queue, int floor, enum Direction direction);
 
 /**
- * Remove some floor and direction from the queue 
- * @param queue pointer to which queue to remove floor and direction from
+ * @brief Remove some floor and direction from the queue 
+ * @param queue a pointer to a queue struct cointaing the queue for floor calls
  * @param floor which floor to remove
- * @returns whether the function failed
+ * @returns int 0, error handling can be added later
  */ 
 int queuePop(struct Queue *queue, int floor);
 
 /**
- * Clear all calls from the queue
+ * @brief Clear all calls from the queue
  * @param queue the queue to be cleared
- * @returns whether the function failed
  */
 void queueClearAll(struct Queue *queue);
 
 /**
- * Check if the button for some floor is pressed in
- * @param floor pointer to which floor is pressed in
- * @param direction pointer to which direction is pressed in
- * @returns whether the button is pressed for some floor and direction
+ * @brief Check if the button for some floor is pressed
+ * @param floor pointer to which floor button is pressed
+ * @param direction pointer to which direction the button is pressed
+ * @returns int 1 if the button is pressed for some floor and direction, else 0
  */ 
 int queueCheckCall(int *floor, enum Direction *direction);
 
 /**
- * Check if some floor and direction is present in the queue
+ * @brief Check if some floor and direction is present in the queue
  * @param queue the queue to check
  * @param floor the floor to check
  * @param direction the direction to check
- * @returns whether the floor and direction is present in the queue
+ * @returns int 1 if the floor and direction is present in the queue, else 0
  */
-bool queueCheckStop(struct Queue queue, int floor, enum Direction direction);
+int queueCheckStop(struct Queue queue, int floor, enum Direction direction);
 
+/**
+ * @brief Checks all floor sensors
+ * 
+ * @param floor a point to a floor value that the floor sensor is active, if no
+ * floorsensor is acitve, this value is unchanged
+ * @return int 0 if no floor sensor is active, else 1
+ */
 int queueCheckFloorSensor(int *floor);
 
+/**
+ * @brief Checks for a new target floor when the final targer floor is reached
+ * 
+ * @param queue The @p Queue sturct to check
+ * @param currentFloor current floor the elevator is located
+ * @param newTargetFloor a pointer to a new target floor, remains unchanged if
+ * there is no new target floor
+ * @return int 0 if there are no new target floor, else 1
+ */
 int queueCheckNewTarget(struct Queue queue, int currentFloor, int *newTargetFloor);
 
 #endif // QUEUE_H

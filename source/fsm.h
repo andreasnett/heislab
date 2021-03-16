@@ -1,7 +1,7 @@
 /**
  * @file fsmControllerer.h
  * @author Steffen Folåsen & Andreas Netteland
- * @brief The final state machine for the elevator
+ * @brief The finite state machine for the elevator
  * @version 1.0
  * @date 2021-03-04
  * 
@@ -17,7 +17,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief Containg all possible states in the FSM. For more info, see (TODO)
+ * @brief Containg all possible states in the FSM. Also contains a startup value
+ * that is 
  * 
  */
 enum ElevatorStates {
@@ -46,7 +47,7 @@ struct FSMController{
 
 /**
  * @brief Global struct for controlling the FSM. Needs to be initialized with
- * @p StateConstructor()
+ * @c fsmControllerConstructor()
  * 
  */
 extern struct FSMController *fsmController;
@@ -56,14 +57,14 @@ extern struct FSMController *fsmController;
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief Allocates memory for the global @p fsmController struct. Also sets
+ * @brief Allocates memory for the global @c fsmController struct. Also sets
  * next state to STATE_elevatorInit
  * 
  */
 int fsmControllerConstructor(void);
 
 /**
- * @brief Frees memory for the global @p fsmController struct.
+ * @brief Frees memory for the global @c fsmController struct.
  * 
  */
 void fsmControllerDestructor(void);
@@ -78,9 +79,9 @@ void fsmControllerDestructor(void);
 void fsmRun(void);
 
 /**
- * @brief 
+ * @brief Sets next state in the @p fsmController struct.
  * 
- * @param nextState 
+ * @param nextState the next state
  */
 void fsmSetNextState(enum ElevatorStates nextState);
 

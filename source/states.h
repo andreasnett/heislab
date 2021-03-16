@@ -6,37 +6,42 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief 
+ * @brief The Entry state for the ElevatorInit state. See sheet of FSM for 
+ * overview.
  * 
  */
 void EntryStateElevatorInit(void);
 
 /**
- * @brief 
+ * @brief The Entry state for the ElevatorStandStill state. See sheet of FSM for 
+ * overview.
  * 
  */
 void EntryStateElevatorStandStill(void);
 
 /**
- * @brief 
+ * @brief The Entry state for the ElevatorGoingUp state. See sheet of FSM for 
+ * overview.
  * 
  */
 void EntryStateElevatorGoingUp(void);
 
 /**
- * @brief 
+ * @brief The Entry state for the ElevatorGoingDown state. See sheet of FSM for 
+ * overview.
  * 
  */
 void EntryStateElevatorGoingDown(void);
 
 /**
- * @brief 
+ * @brief The Entry state for ElevatorEmergency state. See sheet of FSM for
+ * overview.
  * 
  */
 void EntryStateElevatorEmergency(void);
 
 /**
- * @brief 
+ * @brief The Entry state for ElevatorError state. See sheet of FSM for overview.
  * 
  */
 void EntryStateElevatorError(void);
@@ -46,37 +51,42 @@ void EntryStateElevatorError(void);
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief 
+ * @brief The Do state for the ElevatorInit state. See sheet of FSM for overview.
  * 
  */
 void DoStateElevatorInit(void);
 
 /**
- * @brief 
+ * @brief The Do state for the ElevatorStandStill state. See sheet of FSM for 
+ * overview.
  * 
  */
 void DoStateElevatorStandStill(void);
 
 /**
- * @brief 
+ * @brief The Do state for the ElevatorGoingUp state. See sheet of FSM for 
+ * overview.
  * 
  */
 void DoStateElevatorGoingUp(void);
 
 /**
- * @brief 
+ * @brief The Do state for the ElevatorGoingDown state. See sheet of FSM for 
+ * overview.
  * 
  */
 void DoStateElevatorGoingDown(void);
 
 /**
- * @brief 
+ * @brief The Do state for the ElevatorEmergency state. See sheet of FSM for 
+ * overview.
  * 
  */
 void DoStateElevatorEmergency(void);
 
 /**
- * @brief 
+ * @brief The Do state for the ElevatorError state. See sheet of FSM for 
+ * overview.
  * 
  */
 void DoStateElevatorError(void);
@@ -86,37 +96,43 @@ void DoStateElevatorError(void);
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @brief 
+ * @brief The Exit state for the ElevatorInit state. See sheet of FSM for 
+ * overview.
  * 
  */
 void ExitStateElevatorInit(void);
 
 /**
- * @brief 
+ * @brief The Exit state for the ElevatorStandStill state. See sheet of FSM for 
+ * overview.
  * 
  */
 void ExitStateElevatorStandStill(void);
 
 /**
- * @brief 
+ * @brief The Exit state for the ElevatorGoingUp state. See sheet of FSM for 
+ * overview.
  * 
  */
 void ExitStateElevatorGoingUp(void);
 
 /**
- * @brief 
+ * @brief The Exit state for the ElevatorGoingDown state. See sheet of FSM for 
+ * overview.
  * 
  */
 void ExitStateElevatorGoingDown(void);
 
 /**
- * @brief 
+ * @brief The Exit state for the ElevatorEmergency state. See sheet of FSM for 
+ * overview.
  * 
  */
 void ExitStateElevatorEmergency(void);
 
 /**
- * @brief 
+ * @brief The Exit state for the ElevatorError state. See sheet of FSM for 
+ * overview.
  * 
  */
 void ExitStateElevatorError(void);

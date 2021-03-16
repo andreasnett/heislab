@@ -1,8 +1,4 @@
-
-#include <stdio.h>
 #include <stdlib.h> //For free function
-#include <signal.h>
-#include "hardware.h"
 #include "elevator.h"
 
 
@@ -12,9 +8,9 @@ int ElevatorConstructor(void){
     elevator = (struct Elevator*)malloc(sizeof(struct Elevator));
     elevator->elevatorQueue = queueConstructor();
     elevator->elevatorStatus = ElevatorStatusConstructor();
-    elevator->emergencyStop = false;
-    elevator->doorOpen = false;
-    elevator->afterEmergency = false;
+    elevator->emergencyStop = 0;
+    elevator->doorOpen = 0;
+    elevator->afterEmergency = 0;
     return 0;
 }
 
