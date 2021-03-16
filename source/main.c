@@ -29,6 +29,8 @@ int main_init(){
 }
 
 int main_cleanup(){
+    fsmControllerDestructor();
+    ElevatorDestructor();
     return 0;
 }
 
