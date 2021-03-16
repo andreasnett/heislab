@@ -1,3 +1,13 @@
+/**
+ * @file states.h
+ * @author Andreas Netteland og Steffen Folåsen
+ * @brief Containing all the functions for the states
+ * @version 1.0
+ * @date 2021-03-16
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #ifndef STATES_H
 #define STATES_H
 

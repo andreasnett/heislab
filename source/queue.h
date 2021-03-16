@@ -2,7 +2,7 @@
  * @file queue.h
  * @author Andreas Netteland og Steffen Folåsen
  * @brief The queue that keeps track of floors to visit
- * @version 0.1
+ * @version 1.0
  * @date 2021-02-25
  * 
  * @copyright Copyright (c) 2021
