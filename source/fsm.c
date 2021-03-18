@@ -26,7 +26,7 @@ struct FSMController *fsmController;
 
 /**
  * @brief Contains all allowed transistions from a currentState to a nextState.
- * For a better representation of the FSM, see (TODO)
+ * For a better representation of the FSM
  * 
  */
 const struct FSMController allowedStateTransitions[] = {

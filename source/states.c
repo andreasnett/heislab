@@ -142,9 +142,6 @@ void DoStateElevatorGoingUp(void){
             elevator->elevatorStatus.targetFloor = calledFloor;
             
         }
-        printf("Target floor: %i\n", elevator->elevatorStatus.targetFloor);
-        printf("Current floor: %i\n", elevator->elevatorStatus.currentFloor);
-        printf("Called floor: %i\n", calledFloor);
     }
 
     if(queueCheckFloorSensor(&elevator->elevatorStatus.currentFloor)){
