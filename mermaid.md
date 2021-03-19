@@ -6,7 +6,7 @@
 classDiagram
     Elevator <|-- Queue
     Elevator <|-- ElevatorStatus
-    FinalStateMachine <|-- Elevator
+    FiniteStateMachine <|-- Elevator
     class Elevator{
       -Queue elevatorQueue
       -ElevatorStatus elevatorStatus
@@ -33,7 +33,7 @@ classDiagram
       -int currentFloor
     }
 
-    class FinalStateMachine {
+    class FiniteStateMachine {
       -ElevatorStates currentState
       -ElevatorStates nextState
       +fsmSetNextState(ElevatorStates)
